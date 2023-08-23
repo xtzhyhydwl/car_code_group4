@@ -69,6 +69,7 @@ extern void excute_normal_order(void);
 /* External variables --------------------------------------------------------*/
 extern CAN_HandleTypeDef hcan1;
 extern CAN_HandleTypeDef hcan2;
+extern DMA_HandleTypeDef hdma_usart1_rx;
 extern DMA_HandleTypeDef hdma_usart2_rx;
 extern DMA_HandleTypeDef hdma_usart2_tx;
 extern UART_HandleTypeDef huart1;
@@ -211,10 +212,10 @@ void DMA1_Stream5_IRQHandler(void)
 //		write_pos = WIFI_BUFFERSIZE-__HAL_DMA_GET_COUNTER(&hdma_usart2_rx);
 //		
 //		
-//		if(write_pos >= read_pos)//情况1，没有溢凿
+//		if(write_pos >= read_pos)//情况1，没有溢�?
 //		{
 //			data_len = write_pos - read_pos;
-//			for(i=0 ; i<data_len ; i++)//顺序获取数据存放在Rx_Data丿
+//			for(i=0 ; i<data_len ; i++)//顺序获取数据存放在Rx_Data�?
 //			{
 //				Rx_Data[i]=Rx_Buffer[read_pos+i];
 //			}
@@ -225,16 +226,16 @@ void DMA1_Stream5_IRQHandler(void)
 ////				}
 //		}
 //		
-//		else if(write_pos < read_pos)//情况2，溢凿
+//		else if(write_pos < read_pos)//情况2，溢�?
 //		{
 //			uint8_t data1_len=0;
 //			uint8_t data2_len=0;
 //			data1_len =WIFI_BUFFERSIZE - read_pos;
-//			for(i=0;i<data1_len;i++) //获取第一殿
+//			for(i=0;i<data1_len;i++) //获取第一�?
 //			{
 //				Rx_Data[i]=Rx_Buffer[read_pos+i];	
 //			}
-//			for(;i<data1_len+data2_len;i++) //获取第二殿
+//			for(;i<data1_len+data2_len;i++) //获取第二�?
 //			{
 //				Rx_Data[i]=Rx_Buffer[i-data1_len];	
 //			}
@@ -244,7 +245,7 @@ void DMA1_Stream5_IRQHandler(void)
 //		
 //		if(Rx_Data[0]=='_')
 //		{
-//			if(press_flag==0 && Rx_Data[1]!='c' && ctrl_flag==0) //非按键状态，进判斿
+//			if(press_flag==0 && Rx_Data[1]!='c' && ctrl_flag==0) //非按键状态，进判�?
 //			{
 //				excute_normal_order();
 //			}
@@ -253,7 +254,7 @@ void DMA1_Stream5_IRQHandler(void)
 //				excute_special_order();
 //			}
 
-//			else if(ctrl_flag==0 && Rx_Buffer[1]=='c') //不在ctrl位，按下ctrl，置ctrl使
+//			else if(ctrl_flag==0 && Rx_Buffer[1]=='c') //不在ctrl位，按下ctrl，置ctrl�?
 //			{
 //				ctrl_flag=1;
 //				excute_special_order();
@@ -266,7 +267,7 @@ void DMA1_Stream5_IRQHandler(void)
 //				}
 //				else if(Rx_Data[2]!='i')
 //				{
-//					stop_normal_order(); //停止、清陿
+//					stop_normal_order(); //停止、清�?
 //			}			
 //		}
 //	}
@@ -343,61 +344,13 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
-  /* USER CODE END USART1_IRQn 1 */
-}
-
-/**
-  * @brief This function handles USART2 global interrupt.
-  */
-void USART2_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART2_IRQn 0 */
-
-  /* USER CODE END USART2_IRQn 0 */
-  HAL_UART_IRQHandler(&huart2);
-  /* USER CODE BEGIN USART2_IRQn 1 */
-//	uint16_t temp=0;
-		uint8_t temp_flag=__HAL_UART_GET_FLAG(&huart2,UART_FLAG_IDLE);
+		uint8_t temp_flag=__HAL_UART_GET_FLAG(&huart1,UART_FLAG_IDLE);
 	if(temp_flag!=RESET)
 	{
-		uint8_t i=0 ;
-		__HAL_UART_CLEAR_IDLEFLAG(&huart2);
-		HAL_UART_DMAStop(&huart2);
-		
-//		write_pos = WIFI_BUFFERSIZE-__HAL_DMA_GET_COUNTER(&hdma_usart2_rx);
-		
-		
-//		if(write_pos >= read_pos)//情况1，没有溢凿
-//		{
-//			data_len = write_pos - read_pos;
-//			for(i=0 ; i<data_len ; i++)//顺序获取数据存放在Rx_Data丿
-//			{
-//				Rx_Data[i]=Rx_Buffer[read_pos+i];
-//			}
-//			read_pos = write_pos;
-////				if(read_pos>WIFI_BUFFERSIZE)
-////				{
-////					read_pos-=WIFI_BUFFERSIZE;
-////				}
-//		}
-//		
-//		else if(write_pos < read_pos)//情况2，溢凿
-//		{
-//			uint8_t data1_len=0;
-//			uint8_t data2_len=0;
-//			data1_len =WIFI_BUFFERSIZE - read_pos;
-//			for(i=0;i<data1_len;i++) //获取第一殿
-//			{
-//				Rx_Data[i]=Rx_Buffer[read_pos+i];	
-//			}
-//			for(;i<data1_len+data2_len;i++) //获取第二殿
-//			{
-//				Rx_Data[i]=Rx_Buffer[i-data1_len];	
-//			}
-//			read_pos = write_pos;
-//		}
-			
+//		uint8_t i=0 ;
+		__HAL_UART_CLEAR_IDLEFLAG(&huart1);
+		HAL_UART_DMAStop(&huart1);
+					
 		
 		if(Rx_Buffer[0]=='_')
 		{
@@ -429,6 +382,93 @@ void USART2_IRQHandler(void)
 	}
 
 }
+	HAL_UART_Receive_DMA(&huart1,Rx_Buffer,WIFI_BUFFERSIZE);
+
+  /* USER CODE END USART1_IRQn 1 */
+}
+
+/**
+  * @brief This function handles USART2 global interrupt.
+  */
+void USART2_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART2_IRQn 0 */
+
+  /* USER CODE END USART2_IRQn 0 */
+  HAL_UART_IRQHandler(&huart2);
+  /* USER CODE BEGIN USART2_IRQn 1 */
+//	uint16_t temp=0;
+		uint8_t temp_flag=__HAL_UART_GET_FLAG(&huart2,UART_FLAG_IDLE);
+	if(temp_flag!=RESET)
+	{
+//		uint8_t i=0 ;
+		__HAL_UART_CLEAR_IDLEFLAG(&huart2);
+		HAL_UART_DMAStop(&huart2);
+		
+//		write_pos = WIFI_BUFFERSIZE-__HAL_DMA_GET_COUNTER(&hdma_usart2_rx);
+		
+		
+//		if(write_pos >= read_pos)//情况1，没有溢�?
+//		{
+//			data_len = write_pos - read_pos;
+//			for(i=0 ; i<data_len ; i++)//顺序获取数据存放在Rx_Data�?
+//			{
+//				Rx_Data[i]=Rx_Buffer[read_pos+i];
+//			}
+//			read_pos = write_pos;
+////				if(read_pos>WIFI_BUFFERSIZE)
+////				{
+////					read_pos-=WIFI_BUFFERSIZE;
+////				}
+//		}
+//		
+//		else if(write_pos < read_pos)//情况2，溢�?
+//		{
+//			uint8_t data1_len=0;
+//			uint8_t data2_len=0;
+//			data1_len =WIFI_BUFFERSIZE - read_pos;
+//			for(i=0;i<data1_len;i++) //获取第一�?
+//			{
+//				Rx_Data[i]=Rx_Buffer[read_pos+i];	
+//			}
+//			for(;i<data1_len+data2_len;i++) //获取第二�?
+//			{
+//				Rx_Data[i]=Rx_Buffer[i-data1_len];	
+//			}
+//			read_pos = write_pos;
+//		}
+			
+		
+		if(Rx_Buffer[0]=='_')
+		{
+			if(press_flag==0 && Rx_Buffer[1]!='c' && ctrl_flag==0) //非按键状态，进判�?
+			{
+				excute_normal_order();
+			}
+			else if(ctrl_flag==1 && Rx_Buffer[2]=='i' && Rx_Buffer[6]=='d') //在ctrl位，按下两个特殊操作，进判断
+			{
+				excute_special_order();
+			}
+
+			else if(ctrl_flag==0 && Rx_Buffer[1]=='c') //不在ctrl位，按下ctrl，置ctrl�?
+			{
+				ctrl_flag=1;
+				excute_special_order();
+			}
+			else if((press_flag==1 || ctrl_flag==1) && Rx_Buffer[6]=='u')//棿测到按键抬起，判断，停止普鿚指令并清除按下标志或清除ctrl标志
+			{
+				if(Rx_Buffer[1]=='c')//抬起的是ctrl
+				{
+					ctrl_flag=0; //清除ctrl标志
+				}
+				else if(Rx_Buffer[2]!='i')
+				{
+					stop_normal_order(); //停止、清�?
+			}			
+		}
+	}
+
+}
 	HAL_UART_Receive_DMA(&huart2,Rx_Buffer,WIFI_BUFFERSIZE);
 
   /* USER CODE END USART2_IRQn 1 */
@@ -446,6 +486,20 @@ void USART3_IRQHandler(void)
   /* USER CODE BEGIN USART3_IRQn 1 */
 
   /* USER CODE END USART3_IRQn 1 */
+}
+
+/**
+  * @brief This function handles DMA2 stream2 global interrupt.
+  */
+void DMA2_Stream2_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 0 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 0 */
+  HAL_DMA_IRQHandler(&hdma_usart1_rx);
+  /* USER CODE BEGIN DMA2_Stream2_IRQn 1 */
+
+  /* USER CODE END DMA2_Stream2_IRQn 1 */
 }
 
 /**

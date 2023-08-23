@@ -24,7 +24,7 @@
 #define M3 3
 #define M4 4
 
-/*定义电机任务id*/
+/*定义电机任务id （标志位）*/
 #define Motor_Task_0 0 //停止
 #define Motor_Task_1 1 //左移
 #define Motor_Task_2 2 //右移
@@ -46,9 +46,9 @@ int8_t motor_task_id=1;
 void moving_stop(void)
 {
 	RM3508_Set_Speed(0,1); //电机停止
-	RM3508_Set_Speed(0,2); //电机停止
-	RM3508_Set_Speed(0,3); //电机停止
-	RM3508_Set_Speed(0,4); //电机停止
+	RM3508_Set_Speed(0,2); 
+	RM3508_Set_Speed(0,3); 
+	RM3508_Set_Speed(0,4); 
 
 }
 

@@ -104,8 +104,8 @@ int main(void)
 
 	CAN_Init(&hcan1);
 	CAN_Init(&hcan2);
-	__HAL_UART_ENABLE_IT(&huart2,UART_IT_IDLE);
-			HAL_UART_Receive_DMA(&huart2,Rx_Buffer,32);
+	__HAL_UART_ENABLE_IT(&huart1,UART_IT_IDLE);
+			HAL_UART_Receive_DMA(&huart1,Rx_Buffer,32);
 //	__HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
   /* USER CODE END 2 */
 

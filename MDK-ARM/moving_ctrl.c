@@ -37,7 +37,7 @@
 
 /*------------------------Define Begin---------------------*/
 
-#define WIFI_UART huart2 //定义通信端口（ESP8266端口）
+#define WIFI_UART huart1 //定义通信端口（ESP8266端口）
 #define Motor_CAN hacn1 //定义电机控制端口
 #define Motor_TIMER htim2 //定义循环定时器
 #define WIFI_BUFFERSIZE 32
@@ -164,7 +164,7 @@ uint8_t ctrl_flag=0; //操作键开启标志位
 void move_ctrl_init()
 {
 //	count_i=1;
-	HAL_UART_Receive_DMA(&huart2,Rx_Buffer,WIFI_BUFFERSIZE);
+	HAL_UART_Receive_DMA(&WIFI_UART,Rx_Buffer,WIFI_BUFFERSIZE);
 //	HAL_UART_Transmit(&UART,test_str,sizeof(test_str),100);
 //	move_ctrl_init_CRC();
 //	count_i=1;

@@ -5,7 +5,7 @@
 #define __MOVING_CTRL_H__
 
 
-#define WIFI_UART huart2 //定义通信端口（ESP8266端口）
+#define WIFI_UART huart1 //定义通信端口（ESP8266端口）
 #define Motor_CAN hacn1 //定义电机控制端口
 #define Motor_TIMER htim2 //定义循环定时器
 #define BUFFERSIZE 32
